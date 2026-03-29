@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CalcMaster Pro - Калькулятор</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #1a1c20;
+            --accent-color: #0d6efd;
+            --calc-bg: #f8f9fa;
+        }
+        body { background-color: #e9ecef; }
+        
+        /* Виправляємо тусклі кольори хедера/футера */
+        .navbar-custom, .footer-custom {
+            background-color: var(--primary-dark) !important;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        /* Стильні кнопки калькулятора */
+        .calc-btn {
+            height: 60px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 12px;
+            transition: transform 0.1s, box-shadow 0.1s;
+            box-shadow: 0 4px 0 #dee2e6;
+            border: 1px solid #dee2e6;
+        }
+        .calc-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 #dee2e6;
+        }
+        .btn-operator { background-color: #ff9f0a; color: white; box-shadow: 0 4px 0 #cc7a00; border: none; }
+        .btn-system { background-color: #6c757d; color: white; box-shadow: 0 4px 0 #495057; border: none; }
+
+        /* Виправляємо видимість вкладок */
+        .nav-tabs .nav-link { color: #adb5bd; font-weight: bold; border: none; }
+        .nav-tabs .nav-link.active { 
+            color: white !important; 
+            background-color: var(--accent-color) !important; 
+            border-radius: 8px 8px 0 0;
+        }
+
+        /* Дисплей калькулятора */
+        .calc-display {
+            background: #212529;
+            color: #00ff41; /* Ретро-зелений для контрасту */
+            font-family: 'Courier New', monospace;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: right;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        /* Виправлення кнопки "Увійти" */
+        .btn-login {
+            background-color: transparent;
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+        .btn-login:hover {
+            background-color: var(--accent-color);
+            color: white;
+        }
+    </style>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+    <header class="navbar navbar-expand-lg navbar-dark navbar-custom p-3">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-3" href="#">CalcMaster<span class="text-primary">.PRO</span></a>
+            <div class="navbar-nav ms-auto align-items-center">
+                <a href="index.html" class="nav-link active">Калькулятор</a>
+                <a href="about.html" class="nav-link mx-2">Про додаток</a>
+                <a href="profile.html" class="nav-link mx-2">Профіль</a>
+                <a href="login.html" class="btn btn-login ms-3 px-4">Увійти</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container my-5 flex-grow-1">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-8">
+                <div class="card border-0 shadow-lg" style="border-radius: 20px;">
+                    <div class="card-header bg-white border-0 pt-3">
+                        <ul class="nav nav-tabs nav-fill border-0" id="calcTabs">
+                            <li class="nav-item">
+                                <button class="nav-link active" id="std-tab" data-bs-toggle="tab" data-bs-target="#std">Звичайний</button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" id="prog-tab" data-bs-toggle="tab" data-bs-target="#prog">Програміст</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="tab-content">
+                            
+                            <div class="tab-pane fade show active" id="std">
+                                <div class="calc-display">1,234.56</div>
+                                <div class="row g-2">
+                                    <div class="col-3"><button class="btn btn-light calc-btn w-100 text-danger">AC</button></div>
+                                    <div class="col-3"><button class="btn btn-light calc-btn w-100">+/-</button></div>
+                                    <div class="col-3"><button class="btn btn-light calc-btn w-100">%</button></div>
+                                    <div class="col-3"><button class="btn btn-operator calc-btn w-100">÷</button></div>
+                                    
+                                    <div class="col-3"><button class="btn btn-light calc-btn w-100">7</button></div>
+                                    <div class="col-3"><button class="btn btn-light calc-btn w-100">8</button></div>
+                                    <div class="col-3"><button class="btn btn-light calc-btn w-100">9</button></div>
+                                    <div class="col-3"><button class="btn btn-operator calc-btn w-100">×</button></div>
+                                    
+                                    <div class="col-3"><button class="btn btn-light calc-btn w-100">4</button></div>
+                                    <div class="col-3"><button class="btn btn-light calc-btn w-100">5</button></div>
+                                    <div class="col-3"><button class="btn btn-light calc-btn w-100">6</button></div>
+                                    <div class="col-3"><button class="btn btn-operator calc-btn w-100">-</button></div>
+
+                                    <div class="col-3"><button class="btn btn-light calc-btn w-100">1</button></div>
+                                    <div class="col-3"><button class="btn btn-light calc-btn w-100">2</button></div>
+                                    <div class="col-3"><button class="btn btn-light calc-btn w-100">3</button></div>
+                                    <div class="col-3"><button class="btn btn-operator calc-btn w-100">+</button></div>
+
+                                    <div class="col-6"><button class="btn btn-light calc-btn w-100">0</button></div>
+                                    <div class="col-3"><button class="btn btn-light calc-btn w-100">,</button></div>
+                                    <div class="col-3"><button class="btn btn-primary calc-btn w-100 shadow-none" style="box-shadow: 0 4px 0 #0a58ca;">=</button></div>
+                                </div>
+                            </div>
+
+							<div class="tab-pane fade" id="prog">
+								<div class="bg-dark text-info p-3 rounded mb-3 shadow-inset" style="font-size: 0.85rem; font-family: 'Courier New', monospace;">
+									<div class="d-flex justify-content-between mb-1">
+										<span>HEX</span> <span class="text-white">0</span>
+									</div>
+									<div class="d-flex justify-content-between border-start border-primary border-4 ps-2 my-1 bg-secondary bg-opacity-25 py-1">
+										<span class="fw-bold">DEC</span> <span class="text-white fw-bold">0</span>
+									</div>
+									<div class="d-flex justify-content-between mb-1">
+										<span>OCT</span> <span class="text-white">0</span>
+									</div>
+									<div class="d-flex justify-content-between">
+										<span>BIN</span> <span class="text-white">0000 0000 0000 0000</span>
+									</div>
+								</div>
+
+								<div class="row g-2">
+									<div class="col-2"><button class="btn btn-system calc-btn w-100 py-2">A</button></div>
+									<div class="col-2"><button class="btn btn-system calc-btn w-100 py-2">B</button></div>
+									<div class="col-2"><button class="btn btn-system calc-btn w-100 py-2">C</button></div>
+									<div class="col-2"><button class="btn btn-system calc-btn w-100 py-2">D</button></div>
+									<div class="col-2"><button class="btn btn-system calc-btn w-100 py-2">E</button></div>
+									<div class="col-2"><button class="btn btn-system calc-btn w-100 py-2">F</button></div>
+
+									<div class="col-3"><button class="btn btn-light calc-btn w-100 text-danger">AC</button></div>
+									<div class="col-3"><button class="btn btn-operator calc-btn w-100">LSH</button></div>
+									<div class="col-3"><button class="btn btn-operator calc-btn w-100">RSH</button></div>
+									<div class="col-3"><button class="btn btn-operator calc-btn w-100">OR</button></div>
+
+									<div class="col-3"><button class="btn btn-light calc-btn w-100">7</button></div>
+									<div class="col-3"><button class="btn btn-light calc-btn w-100">8</button></div>
+									<div class="col-3"><button class="btn btn-light calc-btn w-100">9</button></div>
+									<div class="col-3"><button class="btn btn-operator calc-btn w-100">XOR</button></div>
+
+									<div class="col-3"><button class="btn btn-light calc-btn w-100">4</button></div>
+									<div class="col-3"><button class="btn btn-light calc-btn w-100">5</button></div>
+									<div class="col-3"><button class="btn btn-light calc-btn w-100">6</button></div>
+									<div class="col-3"><button class="btn btn-operator calc-btn w-100">NOT</button></div>
+
+									<div class="col-3"><button class="btn btn-light calc-btn w-100">1</button></div>
+									<div class="col-3"><button class="btn btn-light calc-btn w-100">2</button></div>
+									<div class="col-3"><button class="btn btn-light calc-btn w-100">3</button></div>
+									<div class="col-3"><button class="btn btn-operator calc-btn w-100">AND</button></div>
+
+									<div class="col-6"><button class="btn btn-light calc-btn w-100">0</button></div>
+									<div class="col-3"><button class="btn btn-light calc-btn w-100">Mod</button></div>
+									<div class="col-3"><button class="btn btn-primary calc-btn w-100">=</button></div>
+								</div>
+								<p class="text-muted mt-3 small text-center">Версія для справжніх хакерів КПІ</p>
+							</div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer-custom text-white py-4 mt-auto">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-md-4 text-md-start">
+                    <h5>CalcMaster Project</h5>
+                    <p class="small text-secondary">Лабораторна робота №1 з дисципліни "Web-дизайн"</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="mb-0">© 2026 Аліса Шварц</p>
+                    <p class="small text-secondary">Група КВ-32 | КПІ</p>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <a href="#" class="text-white-50 text-decoration-none">Документація</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+	<script type="module" src="controller.js"></script>
+</body>
+</html>
